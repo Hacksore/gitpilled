@@ -11,6 +11,7 @@
   "dependencies": {
     "@octokit/rest": "^20.0.2",
     "@vercel/analytics": "^1.2.2",
+    "@vercel/og": "^0.6.2",
     "next": "14.1.4",
     "react": "^18",
     "react-dom": "^18"
