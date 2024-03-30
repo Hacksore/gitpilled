@@ -71,7 +71,7 @@ export default async function Home({
         <span className="font-bold md:text-4xl">@{user}</span> is pilled on
       </h2>
       <a
-        className="bg-white text-black w-64 text-4xl"
+        className="bg-white rounded-full font-bold flex items-center justify-center text-black w-64 text-2xl p-4 m-8"
         target="_blank"
         href={`https://twitter.com/intent/post?${shareData.toString()}`}
       >
