@@ -65,11 +65,12 @@ export default async function Home({
       <h2 className="text-2xl md:text-3xl mt-4 text-center">
         <span className="font-bold md:text-4xl">@{user}</span> is pilled on
       </h2>
-      <div className="flex flex-grow w-fit pt-24 md:px-32 md:gap-24 mx-auto">
+      <div className="flex flex-grow w-fit pt-24 xl:px-32 md:gap-8 xl:gap-32 mx-auto">
         {languagesWithPercentage.map((lang, i) => (
-          <div
+          <a
             key={lang.name}
-            className="h-full w-20 flex flex-col items-center justify-end md:gap-12"
+            className="h-full w-20 md:w-fit flex flex-col items-center justify-end md:gap-12"
+            href={`https://github.com/${user}?tab=repositories&q=&type=&language=${lang.name}`}
           >
             <div className="text-center md:text-2xl font-extrabold">
               #{i + 1}
@@ -78,7 +79,7 @@ export default async function Home({
               {lang.name}
             </div>
             <div
-              className="rounded-t-3xl h-full w-10 md:w-48"
+              className="rounded-t-3xl h-full w-10 md:w-32 xl:w-48"
               style={{
                 backgroundColor:
                   colors[lang.name.toLocaleLowerCase() as LanguageName].color ||
@@ -86,7 +87,7 @@ export default async function Home({
                 height: `${lang.percentage}%`,
               }}
             ></div>
-          </div>
+          </a>
         ))}
       </div>
     </main>
