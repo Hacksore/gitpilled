@@ -2,6 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
-body, html {
+body {
+  height: 100vh;
+  width: 100vw;
   background: #000;
 }
