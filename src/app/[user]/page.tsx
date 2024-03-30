@@ -1,6 +1,5 @@
 import { Octokit } from "@octokit/rest";
 import colors from "@/utils/colors.json";
-import { useMemo } from "react";
 
 type LanguageName = keyof typeof colors;
 const DEFAULT_COLOR = "#444444";
@@ -17,7 +16,7 @@ async function getUsersTopLanguages(username: string) {
 
   // create a list of all the langauge data
   const filteredRepos = listOfRepos
-    .filter((repo) => repo.language)
+    .filter((repo) => repo.language && !repo.fork)
     .map((repo) => repo.language);
 
   // get the count of each language in the list
