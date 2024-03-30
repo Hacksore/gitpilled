@@ -5,7 +5,7 @@ import "./globals.css";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "gitlang",
+  title: "gitpilled",
   description: "see all the langs you've recently used",
 };
 
