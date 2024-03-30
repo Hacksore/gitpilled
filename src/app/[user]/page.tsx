@@ -57,20 +57,28 @@ export default async function Home({
 
   return (
     <main className="w-full h-full flex flex-col bg-gradient-to-b overflow-auto from-[#131313] to-black text-white">
-      <h2 className="text-3xl mt-16 text-center">
-        <span className="font-bold text-4xl">@{user}</span> is pilled on
+      <img
+        src="https://github.com/hacksore.png"
+        alt={`${user} avatar`}
+        className="w-18 h-16 mt-10 overflow-hidden rounded-full mx-auto"
+      />
+      <h2 className="text-2xl md:text-3xl mt-4 text-center">
+        <span className="font-bold md:text-4xl">@{user}</span> is pilled on
       </h2>
-      <div className="flex flex-grow pt-24 px-32 gap-24 w-fit mx-auto">
-        {languagesWithPercentage.map((lang) => (
+      <div className="flex flex-grow w-fit pt-24 md:px-32 md:gap-24 mx-auto">
+        {languagesWithPercentage.map((lang, i) => (
           <div
             key={lang.name}
-            className="h-full flex flex-col items-center justify-end gap-12"
+            className="h-full w-20 flex flex-col items-center justify-end md:gap-12"
           >
-            <div className="text-center text-3xl font-extrabold">
+            <div className="text-center md:text-2xl font-extrabold">
+              #{i + 1}
+            </div>
+            <div className="text-center md:text-3xl font-extrabold">
               {lang.name}
             </div>
             <div
-              className="rounded-t-3xl h-full w-12 md:w-48"
+              className="rounded-t-3xl h-full w-10 md:w-48"
               style={{
                 backgroundColor:
                   colors[lang.name.toLocaleLowerCase() as LanguageName].color ||
