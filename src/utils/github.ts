@@ -90,12 +90,12 @@ export async function nonCachedGetUsersTopLanguages(
       pilledLanguages,
     };
   } catch (error: any) {
-    console.error(error.message);
+    console.error(error);
     return undefined;
   }
 }
 
-const cacheKey = "githubstats-v1";
+const cacheKey = "githubstats-v2";
 const getUsersTopLanguagesCached = unstable_cache(
   (user: string) => nonCachedGetUsersTopLanguages(user),
   [cacheKey],

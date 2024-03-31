@@ -1,3 +1,4 @@
+"use client";
 /* eslint-disable @next/next/no-img-element */
 import { GitPilledLogo } from "@/components/logo";
 import { AnimatedBar } from "./animatedbar";
@@ -16,7 +17,7 @@ const MOCK_NUMBERS = Array.from({ length: 5 }, (_, _i) => {
   return mockData;
 });
 
-export default async function UserStats({
+export default function UserStats({
   githubData,
   loading,
   user,
