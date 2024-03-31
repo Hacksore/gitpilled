@@ -40,7 +40,7 @@ export default async function UserStats({
           linear-gradient(to bottom, #ffffff08 1px, transparent 1px)`,
         }}
       >
-        <a href="/" className="absolute top-6 left-6">
+        <a href="/" className=" block mx-auto">
           <GitPilledLogo className="h-6 w-fit" />
         </a>
         {githubData !== undefined ? (
