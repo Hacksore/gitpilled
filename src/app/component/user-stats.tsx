@@ -57,7 +57,7 @@ export default async function UserStats({
           )}
         </h2>
         <a
-          className="bg-white hover:scale-105 transition duration-300 active:scale-95 rounded-full font-bold flex gap-2 items-center justify-center text-black w-64 text-2xl p-4 m-8"
+          className="bg-white hover:scale-105 cursor-pointer transition duration-300 active:scale-95 rounded-full font-bold flex gap-2 items-center justify-center text-black w-64 text-2xl p-4 m-8"
           target="_blank"
           href={
             githubData === undefined
