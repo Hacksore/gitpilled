@@ -4,6 +4,7 @@ import { getUsersTopLanguages } from "@/utils/github";
 import { LanguageName } from "@/utils/types";
 import { DEFAULT_COLOR } from "@/constants";
 import { GitPilledLogo } from "@/components/logo";
+import { notFound } from "next/navigation";
 // Route segment config
 export const runtime = "edge";
 
@@ -34,7 +35,7 @@ export default async function Image(props: {
 
   const res = await getUsersTopLanguages(user);
   if (!res) {
-    return null;
+    return notFound();
   }
   const { pilledLanguages, username } = res;
 
