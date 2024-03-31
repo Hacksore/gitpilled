@@ -14,8 +14,7 @@ export async function getUsersTopLanguages(rawUser: string): Promise<{
 
   // TODO: we need a lot of tokens to cycle through
   const octokit = new Octokit({
-    // TODO: add the way to round robin the tokens here
-    auth: process.env.GITHUB_AUTH_TOKEN,
+    auth: process.env.GITHUB_PAT,
   });
 
   try {

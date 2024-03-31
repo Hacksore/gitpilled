@@ -19,10 +19,6 @@ export default async function Image(props: {
     user: string;
   };
 }) {
-  // Font
-  //   const interSemiBold = fetch(
-  //     new URL("./Inter-SemiBold.ttf", import.meta.url)
-  //   ).then((res) => res.arrayBuffer());
   const user = props.params.user;
 
   const bast64UserImage = await fetch(`https://github.com/${user}.png`)
@@ -179,17 +175,7 @@ export default async function Image(props: {
     ),
     // ImageResponse options
     {
-      // For convenience, we can re-use the exported opengraph-image
-      // size config to also set the ImageResponse's width and height.
       ...size,
-      //   fonts: [
-      //     {
-      //       name: "Inter",
-      //     //   data: await interSemiBold,
-      //       style: "normal",
-      //       weight: 400,
-      //     },
-      //   ],
     }
   );
 }
