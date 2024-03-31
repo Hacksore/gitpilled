@@ -5,7 +5,6 @@ type AnimatedBarProps = {
   backgroundColor: string;
   percentage: number;
   languageName: string;
-  loading: boolean;
   username: string;
   rank: number;
 };
@@ -14,7 +13,6 @@ export function AnimatedBar({
   backgroundColor,
   percentage,
   languageName,
-  loading,
   username,
   rank,
 }: AnimatedBarProps) {
@@ -26,16 +24,7 @@ export function AnimatedBar({
       }}
       initial={{ height: 0, opacity: 0 }}
       animate={{ height: `${percentage}%`, opacity: 1 }}
-      transition={{
-        type: "spring",
-        damping: 10,
-        stiffness: 100,
-      }}
-      href={
-        !loading
-          ? `https://github.com/${username}?tab=repositories&q=&type=&language=${languageName}`
-          : undefined
-      }
+      href={`https://github.com/${username}?tab=repositories&q=&type=&language=${languageName}`}
       target="_blank"
     >
       <div className="text-center  text-black bg-white/70 rounded p-1 md:rounded-3xl md:p-5 text-lg md:text-4xl font-extrabold mb-2">

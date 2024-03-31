@@ -4,26 +4,37 @@ import { LanguageName } from "@/utils/types";
 import { AnimatedBar } from "./animatedbar";
 import { notFound } from "next/navigation";
 
+type GitHubUserInfo = {
+  username: string;
+  languages: { name: string; count: number; percentage: number }[];
+  maxCount: number;
+};
+
 export default async function UserStats({
-  loading = false,
   user,
-  languages = [
-    { name: "JavaScript", count: 100 },
-    { name: "TypeScript", count: 50 },
-    { name: "Python", count: 25 },
-    { name: "Java", count: 10 },
-    { name: "C++", count: 5 },
-  ],
+  languages,
 }: {
   user?: string;
   languages?: { name: string; count: number }[];
-  loading?: boolean;
 }) {
-  const maxCount = languages[0].count;
-  const languagesWithPercentage = languages.map((lang) => ({
-    ...lang,
-    percentage: 25 + Math.floor((lang.count / maxCount) * 100) * 0.75,
-  }));
+  let userInfo: GitHubUserInfo | undefined = undefined;
+
+  if (languages !== undefined) {
+    const maxCount = languages[0]?.count || 0;
+    const languagesWithPercentage = languages?.map((lang) => ({
+      ...lang,
+      percentage:
+        maxCount !== 0
+          ? 25 + Math.floor((lang.count / maxCount) * 100) * 0.75
+          : 0,
+    }));
+
+    userInfo = {
+      username: user as string,
+      languages: languagesWithPercentage,
+      maxCount,
+    };
+  }
 
   const shareData = new URLSearchParams();
   shareData.append("url", `https://gitpilled.vercel.app/${user}`);
@@ -39,10 +50,10 @@ export default async function UserStats({
           linear-gradient(to bottom, #ffffff08 1px, transparent 1px)`,
         }}
       >
-        {!loading ? (
+        {userInfo !== undefined ? (
           <img
-            src={`https://github.com/${user}.png`}
-            alt={`${user} avatar`}
+            src={`https://github.com/${userInfo.username}.png`}
+            alt={`${userInfo.username} avatar`}
             className="w-16 h-16 mt-10 overflow-hidden rounded-full mx-auto"
           />
         ) : (
@@ -50,10 +61,12 @@ export default async function UserStats({
         )}
 
         <h2 className="text-2xl md:text-3xl mt-4 text-center">
-          {!loading ? (
+          {userInfo !== undefined ? (
             <>
-              <span className="font-bold md:text-4xl">@{user}</span> is pilled
-              on
+              <span className="font-bold md:text-4xl">
+                @{userInfo.username}
+              </span>
+              is pilled on
             </>
           ) : (
             "Loading..."
@@ -63,7 +76,7 @@ export default async function UserStats({
           className="bg-white hover:scale-105 transition duration-300 active:scale-95 rounded-full font-bold flex gap-2 items-center justify-center text-black w-64 text-2xl p-4 m-8"
           target="_blank"
           href={
-            !loading
+            userInfo === undefined
               ? `https://twitter.com/intent/post?${shareData.toString()}`
               : undefined
           }
@@ -80,8 +93,8 @@ export default async function UserStats({
           </svg>
         </a>
         <div className="flex flex-grow w-fit pt-24 2xl:px-32 md:gap-8 2xl:gap-32 mx-auto">
-          {Boolean(user) &&
-            languagesWithPercentage.map((lang, i) => {
+          {userInfo !== undefined &&
+            userInfo?.languages.map((lang, i) => {
               const backgroundColor =
                 colors[lang.name.toLocaleLowerCase() as LanguageName].color ||
                 DEFAULT_COLOR;
@@ -97,7 +110,6 @@ export default async function UserStats({
                     backgroundColor={backgroundColor}
                     percentage={lang.percentage}
                     languageName={lang.name}
-                    loading={loading}
                     username={user as string}
                     rank={i + 1}
                   />
