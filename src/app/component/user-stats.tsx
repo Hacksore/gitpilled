@@ -91,7 +91,7 @@ export default async function UserStats({
         <div className="flex flex-grow w-fit pt-24 2xl:px-32 md:gap-8 2xl:gap-32 mx-auto">
           {(loading || githubData === undefined
             ? MOCK_NUMBERS
-            : githubData.languages
+            : githubData.pilledLanguages
           ).map((lang, i) => {
             return (
               <div

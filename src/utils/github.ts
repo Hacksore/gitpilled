@@ -1,18 +1,10 @@
-import { unstable_cache } from "next/cache";
 import { Octokit } from "octokit";
-
-interface UserRepos {
-  name: string;
-  count: number;
-  percentage: number;
-}
+import { PilledLanguage, pillgorithm } from "./pillgorithm";
 
 export type GithubData = {
   username: string;
-  languages: UserRepos[];
-  maxCount?: number;
+  pilledLanguages: PilledLanguage[];
 };
-
 export async function nonCachedGetUsersTopLanguages(
   rawUser: string
 ): Promise<GithubData | undefined> {
@@ -30,7 +22,9 @@ export async function nonCachedGetUsersTopLanguages(
           login,
           repositories(first: $num, after: $cursor, isFork: false) {
             nodes {
-              name,
+              url,
+              updatedAt,
+              createdAt,
               languages(first: 100) {
                 edges {
                   size,
@@ -56,6 +50,9 @@ export async function nonCachedGetUsersTopLanguages(
         repositories: {
           nodes: {
             name: string;
+            url: string;
+            createdAt: string;
+            updatedAt: string;
             languages: {
               edges: {
                 size: number;
@@ -68,37 +65,28 @@ export async function nonCachedGetUsersTopLanguages(
         };
       };
     };
-
     const username = userInfo?.user?.login;
 
-    const languagesMap = userInfo?.user?.repositories?.nodes
-      ?.flatMap((r) => r.languages.edges)
-      .reduce((acc, { node, size }) => {
-        acc[node.name] = (acc[node.name] || 0) + size;
-        return acc;
-      }, {} as Record<string, number>);
+    userInfo.user.repositories.nodes = userInfo.user.repositories.nodes.filter(
+      (r) =>
+        r.url
+          ?.toLocaleLowerCase()
+          .startsWith(`https://github.com/${username}`.toLocaleLowerCase())
+    );
 
-    const repoLanguages = Object.entries(languagesMap)
-      .map(([name, size]) => ({
-        name,
-        count: size,
+    const { pilledLanguages } = pillgorithm(
+      userInfo.user.repositories.nodes.map((repo) => ({
+        ...repo,
+        languages: repo.languages.edges.map((lang) => ({
+          name: lang.node.name,
+          size: lang.size,
+        })),
       }))
-      .sort((a, b) => b.count - a.count)
-      .slice(0, 5);
-
-    const maxCount = repoLanguages[0]?.count || 0;
-    const languagesWithPercentage = repoLanguages?.map((lang) => ({
-      ...lang,
-      percentage:
-        maxCount !== 0
-          ? 25 + Math.floor((lang.count / maxCount) * 100) * 0.75
-          : 0,
-    }));
+    );
 
     return {
       username,
-      languages: languagesWithPercentage,
-      maxCount,
+      pilledLanguages,
     };
   } catch (error) {
     console.error(error);
@@ -107,9 +95,9 @@ export async function nonCachedGetUsersTopLanguages(
 }
 
 // use this when working on the nonCachedGetUsersTopLanguages function
-// export const getUsersTopLanguages = nonCachedGetUsersTopLanguages;
+export const getUsersTopLanguages = nonCachedGetUsersTopLanguages;
 
-export const getUsersTopLanguages = unstable_cache(
-  (user: string) => nonCachedGetUsersTopLanguages(user),
-  [`githubstats`]
-);
+// export const getUsersTopLanguages = unstable_cache(
+//   (user: string) => nonCachedGetUsersTopLanguages(user),
+//   [`githubstats`]
+// );
