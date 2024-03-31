@@ -12,18 +12,8 @@ const META_INFO = {
 export const metadata: Metadata = {
   title: META_INFO.title,
   description: META_INFO.description,
-  openGraph: {
-    title: META_INFO.title,
-    description: META_INFO.description,
-    images: ["https://gitpilled.vercel.app/og.png"],
-    type: "website",
-  },
-  twitter: {
-    title: META_INFO.title,
-    description: META_INFO.description,
-    images: ["https://gitpilled.vercel.app/og.png"],
-    card: "summary_large_image",
-  },
+  // TODO: do we need this?
+  // metadataBase: new URL("https://gitpilled.vercel.app"),
 };
 
 export default function RootLayout({
