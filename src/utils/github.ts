@@ -89,8 +89,8 @@ export async function nonCachedGetUsersTopLanguages(
       username,
       pilledLanguages,
     };
-  } catch (error) {
-    console.error(error);
+  } catch (error: any) {
+    console.error(error.message);
     return undefined;
   }
 }
