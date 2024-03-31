@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import { ImageResponse } from "next/og";
 import colors from "@/utils/colors.json";
 import { getUsersTopLanguages } from "@/utils/github";
