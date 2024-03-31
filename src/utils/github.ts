@@ -7,7 +7,7 @@ export type GithubData = {
   pilledLanguages: PilledLanguage[];
 };
 export async function nonCachedGetUsersTopLanguages(
-  rawUser: string
+  rawUser: string,
 ): Promise<GithubData | undefined> {
   const queryUser = rawUser.toLowerCase();
 
@@ -44,7 +44,7 @@ export async function nonCachedGetUsersTopLanguages(
       }`,
       {
         username: queryUser,
-      }
+      },
     )) as {
       user: {
         login: string;
@@ -72,7 +72,7 @@ export async function nonCachedGetUsersTopLanguages(
       (r) =>
         r.url
           ?.toLocaleLowerCase()
-          .startsWith(`https://github.com/${username}`.toLocaleLowerCase())
+          .startsWith(`https://github.com/${username}`.toLocaleLowerCase()),
     );
 
     const { pilledLanguages } = pillgorithm(
@@ -82,7 +82,7 @@ export async function nonCachedGetUsersTopLanguages(
           name: lang.node.name,
           size: lang.size,
         })),
-      }))
+      })),
     );
 
     return {
@@ -95,10 +95,16 @@ export async function nonCachedGetUsersTopLanguages(
   }
 }
 
-// use this when working on the nonCachedGetUsersTopLanguages function
-// export const getUsersTopLanguages = nonCachedGetUsersTopLanguages;
-
-export const getUsersTopLanguages = unstable_cache(
+const getUsersTopLanguagesCached = unstable_cache(
   (user: string) => nonCachedGetUsersTopLanguages(user),
-  [`githubstats`]
+  [`githubstats`],
 );
+
+let getUsersTopLanguages;
+if (process.env.NODE_ENV !== "production") {
+  getUsersTopLanguages = nonCachedGetUsersTopLanguages;
+} else {
+  getUsersTopLanguages = getUsersTopLanguagesCached;
+}
+
+export { getUsersTopLanguages };
