@@ -18,7 +18,9 @@ export default function Home({
   params: { user: string };
 }) {
   return (
-    <Suspense fallback={<UserStats loading />}>
+    <Suspense
+      fallback={<UserStats user={user} loading={true} />}
+    >
       <FetchRepos user={user} />
     </Suspense>
   );

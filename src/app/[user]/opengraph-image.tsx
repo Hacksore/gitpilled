@@ -1,8 +1,6 @@
 import { ImageResponse } from "next/og";
 import colors from "@/utils/colors.json";
-import {
-  getUsersTopLanguages,
-} from "@/utils/github";
+import { getUsersTopLanguages } from "@/utils/github";
 import { LanguageName } from "@/utils/types";
 import { DEFAULT_COLOR } from "@/constants";
 // Route segment config
@@ -23,13 +21,16 @@ export default async function Image(props: {
     user: string;
   };
 }) {
-  const user = props.params.user;
-
+  const { user } = props.params;
   const bast64UserImage = await fetch(`https://github.com/${user}.png`)
     .then((r) => r.arrayBuffer())
     .then((r) => Buffer.from(r).toString("base64"));
 
-  const { languages, username }  = await getUsersTopLanguages(user);
+  const res = await getUsersTopLanguages(user);
+  if (!res) {
+    return null;
+  }
+  const { languages, username } = res;
 
   const maxCount = languages[0].count;
   const languagesWithPercentage = languages.map((lang) => ({
@@ -87,7 +88,7 @@ export default async function Image(props: {
               }}
               src={`data:image/png;base64,${bast64UserImage}`}
             />
-            @{user}
+            @{username}
           </div>
           <div
             style={{
@@ -180,6 +181,6 @@ export default async function Image(props: {
     // ImageResponse options
     {
       ...size,
-    },
+    }
   );
 }

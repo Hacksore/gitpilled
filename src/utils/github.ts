@@ -4,12 +4,18 @@ import { redirect } from "next/navigation";
 interface UserRepos {
   name: string;
   count: number;
+  percentage: number;
 }
 
-export async function getUsersTopLanguages(rawUser: string): Promise<{
+export type GithubData = {
   username: string;
   languages: UserRepos[];
-}> {
+  maxCount?: number;
+};
+
+export async function getUsersTopLanguages(
+  rawUser: string
+): Promise<GithubData | undefined> {
   const username = rawUser.toLowerCase();
 
   // TODO: we need a lot of tokens to cycle through
@@ -43,7 +49,7 @@ export async function getUsersTopLanguages(rawUser: string): Promise<{
         }
         return acc;
       },
-      {},
+      {}
     );
 
     // sort the languages by count and have name and count as a property
@@ -51,12 +57,23 @@ export async function getUsersTopLanguages(rawUser: string): Promise<{
       .map(([name, count]) => ({ name, count }))
       .sort((a, b) => b.count - a.count);
 
+    const languages = sortedLanguages.slice(0, 5);
+
+    const maxCount = languages[0]?.count || 0;
+    const languagesWithPercentage = languages?.map((lang) => ({
+      ...lang,
+      percentage:
+        maxCount !== 0
+          ? 25 + Math.floor((lang.count / maxCount) * 100) * 0.75
+          : 0,
+    }));
     return {
       username: userInfo.data.login,
-      languages: sortedLanguages.splice(0, 5),
+      languages: languagesWithPercentage,
+      maxCount,
     };
   } catch (error) {
     console.error(error);
-    return redirect("/404?uusername="+rawUser);
+    return undefined;
   }
 }

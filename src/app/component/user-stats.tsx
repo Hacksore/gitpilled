@@ -3,42 +3,23 @@ import colors from "@/utils/colors.json";
 import { LanguageName } from "@/utils/types";
 import { AnimatedBar } from "./animatedbar";
 import { notFound } from "next/navigation";
-
-type GitHubUserInfo = {
-  username: string;
-  languages: { name: string; count: number; percentage: number }[];
-  maxCount: number;
-};
+import { GithubData } from "@/utils/github";
 
 export default async function UserStats({
+  githubData,
+  loading,
   user,
-  languages,
 }: {
-  user?: string;
-  languages?: { name: string; count: number }[];
+  githubData?: GithubData;
+  loading?: boolean;
+  user: string;
 }) {
-  let userInfo: GitHubUserInfo | undefined = undefined;
-
-  if (languages !== undefined) {
-    const maxCount = languages[0]?.count || 0;
-    const languagesWithPercentage = languages?.map((lang) => ({
-      ...lang,
-      percentage:
-        maxCount !== 0
-          ? 25 + Math.floor((lang.count / maxCount) * 100) * 0.75
-          : 0,
-    }));
-
-    userInfo = {
-      username: user as string,
-      languages: languagesWithPercentage,
-      maxCount,
-    };
-  }
-
   const shareData = new URLSearchParams();
   shareData.append("url", `https://gitpilled.vercel.app/${user}`);
-  shareData.append("text", `Checkout what ${user} is pilled on 💊`);
+  shareData.append(
+    "text",
+    `Checkout what ${githubData?.username || "everybody"} is pilled on 💊`
+  );
 
   return (
     <main className="w-screen h-screen bg-gradient-to-b from-[#131313] to-black text-white">
@@ -50,10 +31,10 @@ export default async function UserStats({
           linear-gradient(to bottom, #ffffff08 1px, transparent 1px)`,
         }}
       >
-        {userInfo !== undefined ? (
+        {githubData !== undefined ? (
           <img
-            src={`https://github.com/${userInfo.username}.png`}
-            alt={`${userInfo.username} avatar`}
+            src={`https://github.com/${githubData.username}.png`}
+            alt={`${githubData.username} avatar`}
             className="w-16 h-16 mt-10 overflow-hidden rounded-full mx-auto"
           />
         ) : (
@@ -61,22 +42,25 @@ export default async function UserStats({
         )}
 
         <h2 className="text-2xl md:text-3xl mt-4 text-center">
-          {userInfo !== undefined ? (
+          {loading ? (
+            "Loading..."
+          ) : githubData === undefined ? (
+            `User ${user} not found`
+          ) : (
             <>
+              This is what{" "}
               <span className="font-bold md:text-4xl">
-                @{userInfo.username}
-              </span>
+                @{githubData.username}
+              </span>{" "}
               is pilled on
             </>
-          ) : (
-            "Loading..."
           )}
         </h2>
         <a
           className="bg-white hover:scale-105 transition duration-300 active:scale-95 rounded-full font-bold flex gap-2 items-center justify-center text-black w-64 text-2xl p-4 m-8"
           target="_blank"
           href={
-            userInfo === undefined
+            githubData === undefined
               ? `https://twitter.com/intent/post?${shareData.toString()}`
               : undefined
           }
@@ -93,8 +77,8 @@ export default async function UserStats({
           </svg>
         </a>
         <div className="flex flex-grow w-fit pt-24 2xl:px-32 md:gap-8 2xl:gap-32 mx-auto">
-          {userInfo !== undefined &&
-            userInfo?.languages.map((lang, i) => {
+          {githubData !== undefined &&
+            githubData.languages.map((lang, i) => {
               const backgroundColor =
                 colors[lang.name.toLocaleLowerCase() as LanguageName].color ||
                 DEFAULT_COLOR;
@@ -110,7 +94,7 @@ export default async function UserStats({
                     backgroundColor={backgroundColor}
                     percentage={lang.percentage}
                     languageName={lang.name}
-                    username={user as string}
+                    username={githubData.username}
                     rank={i + 1}
                   />
                 </div>
