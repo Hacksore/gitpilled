@@ -45,7 +45,7 @@ export default async function UserStats({
             <span className="font-bold md:text-4xl">@{user}</span> is pilled on
           </>
         ) : (
-          "Loading..."
+          <span className="font-bold md:text-4xl">Loading...</span>
         )}
       </h2>
       <a
