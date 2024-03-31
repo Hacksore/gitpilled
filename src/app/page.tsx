@@ -26,12 +26,12 @@ export default function Home() {
         <div className="relative flex flex-col items-center bg-background p-8 mx-2 md:p-12 gap-2 rounded-xl border border-primary/10">
           <div className="absolute top-4 right-4">
             <GitHubButton
-              href="https://github.com/hacksore/gitpilled"
+              href="https://github.com/Hacksore/gitpilled"
               data-color-scheme="no-preference: dark; light: dark; dark: dark;"
               data-icon="octicon-star"
               data-size="large"
               data-show-count="true"
-              aria-label="Star hacksore/gitpilled on GitHub"
+              aria-label="Star Hacksore/gitpilled on GitHub"
             >
               Star
             </GitHubButton>
