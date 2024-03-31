@@ -30,7 +30,7 @@ export default async function UserStats({
   shareData.append("text", `Checkout what ${user} is pilled on 💊`);
 
   return (
-    <main className=" w-full h-full bg-gradient-to-b from-[#131313] to-black text-white">
+    <main className="w-screen h-screen bg-gradient-to-b from-[#131313] to-black text-white">
       <div
         className="h-full w-full overflow-y-hidden flex flex-col items-center overflow-auto"
         style={{

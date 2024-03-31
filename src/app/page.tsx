@@ -21,13 +21,10 @@ export default function Home() {
           value={user}
           onChange={(e) => setUser(e.target.value)}
           data-disable-1password="true"
-          className="border border-neutral-600 bg-black p-2 rounded-l-lg text-4xl"
           placeholder="Github username"
           type="text"
         />
-        <Button>
-          Search
-        </Button>
+        <Button>Search</Button>
       </form>
     </main>
   );
