@@ -11,7 +11,7 @@ type AnimatedBarProps = {
   username?: string;
   rank: number;
   loading?: boolean;
-  language?: GithubData["languages"][number];
+  language?: GithubData["pilledLanguages"][number];
 };
 
 export function AnimatedBar({
@@ -30,16 +30,10 @@ export function AnimatedBar({
       style={{
         backgroundColor,
       }}
-      title={
-        loading
-          ? undefined
-          : `${username} has ${formatNumber(
-              language?.count || 0
-            )} characters of ${language?.name} in their repositories`
-      }
+      title={loading ? undefined : `${language?.name}`}
       className={cn(
         "transition duration-300 translate-y-4 hover:translate-y-0 pb-4 rounded-t-[3rem] h-full w-10 md:w-32 2xl:w-48 flex items-end justify-center",
-        loading && "h-32 bg-gray-500 !animate-pulse"
+        loading && "h-32 bg-gray-500 !animate-pulse",
       )}
       initial={{ height: "10%" }}
       animate={{

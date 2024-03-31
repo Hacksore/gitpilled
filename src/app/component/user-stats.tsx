@@ -1,14 +1,18 @@
 import { GitPilledLogo } from "@/components/logo";
 import { AnimatedBar } from "./animatedbar";
 import { GithubData } from "@/utils/github";
+import { PilledLanguage } from "@/utils/pillgorithm";
 
 const MOCK_NUMBERS = Array.from({ length: 5 }, (_, _i) => {
   const i = _i + 1;
-  return {
+  const mockData: PilledLanguage = {
     name: "Loading...",
     percentage: (i * i) / 25,
-    count: i * i,
+    realPercentage: 0,
+    score: 0
   };
+
+  return mockData
 });
 
 export default async function UserStats({
