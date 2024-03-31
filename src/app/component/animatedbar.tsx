@@ -20,7 +20,7 @@ export function AnimatedBar({
 }: AnimatedBarProps) {
   return (
     <motion.a
-      className="rounded-t-[3rem] h-full w-10 md:w-32 2xl:w-48 flex items-end justify-center"
+      className="transition duration-300 translate-y-4 hover:translate-y-0 pb-4 rounded-t-[3rem] h-full w-10 md:w-32 2xl:w-48 flex items-end justify-center"
       style={{
         backgroundColor,
       }}

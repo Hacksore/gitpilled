@@ -2,7 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
-html, body {
+html,
+body {
   background: #000;
 }
 
@@ -76,5 +77,18 @@ html, body {
   }
   body {
     @apply bg-background text-foreground;
+  }
+}
+
+.animated-grid {
+  animation: grid 10s infinite linear;
+}
+
+@keyframes grid {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 0 100%;
   }
 }
