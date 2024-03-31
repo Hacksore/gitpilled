@@ -12,8 +12,11 @@ const META_INFO = {
 export const metadata: Metadata = {
   title: META_INFO.title,
   description: META_INFO.description,
-  // TODO: do we need this?
-  // metadataBase: new URL("https://gitpilled.vercel.app"),
+  metadataBase: new URL(
+    process.env.NODE_ENV === "development"
+      ? "http://localhost:3000"
+      : "https://gitpilled.vercel.app",
+  ),
 };
 
 export default function RootLayout({
