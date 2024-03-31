@@ -5,6 +5,7 @@ import { redirect } from "next/navigation";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { GitPilledLogo } from "@/components/logo";
+import GitHubButton from "react-github-btn";
 
 const redirectToUserProfile = (username: string) => {
   return redirect("/" + username);
@@ -22,7 +23,19 @@ export default function Home() {
         linear-gradient(to bottom, #ffffff08 1px, transparent 1px)`,
         }}
       >
-        <div className="flex flex-col items-center bg-background p-8 mx-2 md:p-12 gap-2 rounded-xl border border-primary/10">
+        <div className="relative flex flex-col items-center bg-background p-8 mx-2 md:p-12 gap-2 rounded-xl border border-primary/10">
+          <div className="absolute top-4 right-4">
+            <GitHubButton
+              href="https://github.com/hacksore/gitpilled"
+              data-color-scheme="no-preference: dark; light: dark; dark: dark;"
+              data-icon="octicon-star"
+              data-size="large"
+              data-show-count="true"
+              aria-label="Star hacksore/gitpilled on GitHub"
+            >
+              Star
+            </GitHubButton>
+          </div>
           <img src="/pill.png" alt="pill" className="w-24 h-24" />
           <GitPilledLogo className="h-8 w-fit mt-2 " />
           <h2 className="text-xl font-bold">
