@@ -4,10 +4,26 @@ import "./globals.css";
 import { Analytics } from "@vercel/analytics/react";
 
 const inter = Inter({ subsets: ["latin"] });
-
-export const metadata: Metadata = {
+const META_INFO = {
   title: "gitpilled",
   description: "What language are you pilled in?",
+};
+
+export const metadata: Metadata = {
+  title: META_INFO.title,
+  description: META_INFO.description,
+  openGraph: {
+    title: META_INFO.title,
+    description: META_INFO.description,
+    images: ["/og.png"],
+    type: "website",
+  },
+  twitter: {
+    title: META_INFO.title,
+    description: META_INFO.description,
+    images: ["/og.png"],
+    card: "summary_large_image",
+  },
 };
 
 export default function RootLayout({
