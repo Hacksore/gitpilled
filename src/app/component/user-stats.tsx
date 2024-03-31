@@ -1,11 +1,14 @@
 import { AnimatedBar } from "./animatedbar";
 import { GithubData } from "@/utils/github";
 
-const MOCK_NUMBERS = Array.from({ length: 5 }, (_, i) => ({
-  name: "Loading...",
-  percentage: 0,
-  count: 0,
-}));
+const MOCK_NUMBERS = Array.from({ length: 5 }, (_, _i) => {
+  const i = _i + 1;
+  return {
+    name: "Loading...",
+    percentage: (i * i) / 25,
+    count: i * i,
+  };
+});
 
 export default async function UserStats({
   githubData,
@@ -92,7 +95,7 @@ export default async function UserStats({
                 className="h-full w-20 md:w-fit flex flex-col items-center justify-end md:gap-12"
               >
                 <div className="text-center md:text-3xl font-extrabold">
-                  {lang.name}
+                  {loading || githubData !== undefined ? lang.name : null}
                 </div>
                 <AnimatedBar
                   language={lang}

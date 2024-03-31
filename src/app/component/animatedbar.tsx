@@ -22,7 +22,7 @@ export function AnimatedBar({
   const backgroundColor =
     (!loading &&
       language &&
-      colors[language.name.toLocaleLowerCase() as LanguageName].color) ||
+      colors[language.name.toLocaleLowerCase() as LanguageName]?.color) ||
     DEFAULT_COLOR;
   return (
     <motion.a
@@ -45,7 +45,7 @@ export function AnimatedBar({
       }
       target="_blank"
     >
-      {!loading && (
+      {!loading && username && (
         <div className="text-center  text-black bg-white/70 rounded p-1 md:rounded-3xl md:p-5 text-lg md:text-4xl font-extrabold mb-2">
           #{rank}
         </div>
