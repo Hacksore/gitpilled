@@ -1,5 +1,4 @@
 import { Octokit } from "@octokit/rest";
-import { redirect } from "next/navigation";
 
 interface UserRepos {
   name: string;
@@ -28,8 +27,16 @@ export async function getUsersTopLanguages(
       username,
     });
 
+    console.log("userinfo", {
+      rateLimit: userInfo.headers["x-ratelimit-limit"]
+    });
+
     const listOfRepos = await octokit.paginate("GET /users/{username}/repos", {
       username: username,
+    });
+
+    console.log("listRepos", {
+      rateLimit: userInfo.headers["x-ratelimit-limit"]
     });
 
     // create a list of all the langauge data
