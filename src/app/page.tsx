@@ -17,7 +17,7 @@ export default function Home() {
   return (
     <main className="w-screen h-screen bg-gradient-to-b from-[#131313] to-black text-white dark">
       <div
-        className="h-full w-full overflow-y-hidden flex flex-col items-center justify-center gap-12 overflow-auto animated-grid"
+        className="h-full w-full relative overflow-y-hidden flex flex-col items-center justify-center gap-12 overflow-auto animated-grid"
         style={{
           backgroundSize: "100px 100px",
           backgroundImage: `linear-gradient(to right, #ffffff08 1px, transparent 1px),
@@ -54,11 +54,22 @@ export default function Home() {
               placeholder="Github username"
               type="search"
             />
-            <Button variant="default"
-
-              className="rounded-l-none"
-            >Search</Button>
+            <Button variant="default" className="rounded-l-none">
+              Search
+            </Button>
           </form>
+        </div>
+        <div className="absolute bottom-4 left-1/2 -translate-x-1/2">
+          <p className="text-xs text-center">
+            Made with ❤️ by{" "}
+            <a href="https://twitter.com/typesafeui" className="text-red-400">
+              typesafeui
+            </a>
+            {" and "}
+            <a href="https://twitter.com/Hacksore" className="text-red-400">
+              Hacksore
+            </a>
+          </p>
         </div>
       </div>
     </main>
