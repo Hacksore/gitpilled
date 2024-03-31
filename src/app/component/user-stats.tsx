@@ -61,9 +61,21 @@ export default async function UserStats({
       </a>
       <div className="flex flex-grow w-fit pt-24 2xl:px-32 md:gap-8 2xl:gap-32 mx-auto">
         {languagesWithPercentage.map((lang, i) => {
-          const backgroundColor =
-            colors[lang.name.toLocaleLowerCase() as LanguageName].color ||
-            DEFAULT_COLOR;
+          let barStyles = {};
+
+          if (!loading) {
+            barStyles = {
+              backgroundColor:
+                colors[lang.name.toLocaleLowerCase() as LanguageName].color ||
+                DEFAULT_COLOR,
+            };
+          } else {
+            barStyles = {
+              opacity: 0.2,
+              backgroundColor: "gray",
+            };
+          }
+
           return (
             <a
               key={lang.name}
@@ -75,16 +87,20 @@ export default async function UserStats({
               }
               target="_blank"
             >
-              <div className="text-center md:text-2xl font-extrabold">
-                #{i + 1}
-              </div>
-              <div className="text-center md:text-3xl font-extrabold">
-                {lang.name}
-              </div>
+              {!loading && (
+                <>
+                  <div className="text-center md:text-2xl font-extrabold">
+                    #{i + 1}
+                  </div>
+                  <div className="text-center md:text-3xl font-extrabold">
+                    {lang.name}
+                  </div>
+                </>
+              )}
               <div
                 className="rounded-t-3xl h-full w-10 md:w-32 2xl:w-48"
                 style={{
-                  backgroundColor,
+                  ...barStyles,
                   height: `${lang.percentage}%`,
                 }}
               ></div>

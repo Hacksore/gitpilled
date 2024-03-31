@@ -1,9 +1,24 @@
 import { Octokit } from "@octokit/rest";
 
-export async function getUsersTopLanguages(username: string) {
+interface UserRepos {
+  name: string;
+  count: number;
+}
+
+export async function getUsersTopLanguages(rawUser: string): Promise<{
+  username: string;
+  languages: UserRepos[];
+}> {
+  const username = rawUser.toLowerCase();
+
+  // TODO: we need a lot of tokens to cycle through
   const octokit = new Octokit({
     // TODO: add the way to round robin the tokens here
     auth: process.env.GITHUB_AUTH_TOKEN,
+  });
+
+  const userInfo = await octokit.request("GET /users/{username}", {
+    username
   });
 
   const listOfRepos = await octokit.paginate("GET /users/{username}/repos", {
@@ -35,5 +50,8 @@ export async function getUsersTopLanguages(username: string) {
     .map(([name, count]) => ({ name, count }))
     .sort((a, b) => b.count - a.count);
 
-  return sortedLanguages.splice(0, 5);
+  return {
+    username: userInfo.data.login,
+    languages: sortedLanguages.splice(0, 5),
+  }
 }
