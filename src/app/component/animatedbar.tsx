@@ -5,6 +5,7 @@ import { GithubData } from "@/utils/github";
 import { motion } from "framer-motion";
 import colors from "@/utils/colors.json";
 import { LanguageName } from "@/utils/types";
+import { formatNumber } from "@/utils/methods";
 
 type AnimatedBarProps = {
   username?: string;
@@ -29,7 +30,13 @@ export function AnimatedBar({
       style={{
         backgroundColor,
       }}
-      title={`${username} has ${language?.count} characters of ${language?.name} in their repositories`}
+      title={
+        loading
+          ? undefined
+          : `${username} has ${formatNumber(
+              language?.count || 0
+            )} characters of ${language?.name} in their repositories`
+      }
       className={cn(
         "transition duration-300 translate-y-4 hover:translate-y-0 pb-4 rounded-t-[3rem] h-full w-10 md:w-32 2xl:w-48 flex items-end justify-center",
         loading && "h-32 bg-gray-500 !animate-pulse"
