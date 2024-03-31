@@ -1,3 +1,4 @@
+import { unstable_cache } from "next/cache";
 import { Octokit } from "octokit";
 
 interface UserRepos {
@@ -12,7 +13,7 @@ export type GithubData = {
   maxCount?: number;
 };
 
-export async function getUsersTopLanguages(
+export async function nonCachedGetUsersTopLanguages(
   rawUser: string
 ): Promise<GithubData | undefined> {
   const queryUser = rawUser.toLowerCase();
@@ -104,3 +105,8 @@ export async function getUsersTopLanguages(
     return undefined;
   }
 }
+
+export const getUsersTopLanguages = unstable_cache(
+  (user: string) => nonCachedGetUsersTopLanguages(user),
+  [`githubstats`]
+);
