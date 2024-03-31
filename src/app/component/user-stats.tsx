@@ -31,18 +31,18 @@ export default async function UserStats({
   );
 
   return (
-    <main className="w-screen h-screen bg-gradient-to-b from-[#131313] to-black text-white pt-12">
-      <a href="/" className="absolute top-6 left-6">
-        <GitPilledLogo className="h-6 w-fit" />
-      </a>
+    <main className="w-screen h-screen bg-gradient-to-b from-[#131313] to-black text-white">
       <div
-        className="h-full w-full overflow-y-hidden flex flex-col items-center overflow-auto"
+        className="h-full w-full overflow-y-hidden flex flex-col items-center overflow-auto  pt-12"
         style={{
           backgroundSize: "100px 100px",
           backgroundImage: `linear-gradient(to right, #ffffff08 1px, transparent 1px),
           linear-gradient(to bottom, #ffffff08 1px, transparent 1px)`,
         }}
       >
+        <a href="/" className="absolute top-6 left-6">
+          <GitPilledLogo className="h-6 w-fit" />
+        </a>
         {githubData !== undefined ? (
           <img
             src={`https://github.com/${githubData.username}.png`}
@@ -52,7 +52,6 @@ export default async function UserStats({
         ) : (
           <div className="w-16 h-16 mt-10 bg-neutral-600 overflow-hidden rounded-full mx-auto"></div>
         )}
-
         <h2 className="text-2xl md:text-3xl mt-4 text-center">
           {loading ? (
             "Loading..."
