@@ -7,7 +7,7 @@ const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "gitpilled",
-  description: "see all the langs you've recently used",
+  description: "What language are you pilled in?",
 };
 
 export default function RootLayout({
