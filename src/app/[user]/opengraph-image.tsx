@@ -1,6 +1,10 @@
 import { ImageResponse } from "next/og";
 import colors from "@/utils/colors.json";
-import { DEFAULT_COLOR, LanguageName, getUsersTopLanguages } from "@/utils";
+import {
+  getUsersTopLanguages,
+} from "@/utils/github";
+import { LanguageName } from "@/utils/types";
+import { DEFAULT_COLOR } from "@/constants";
 // Route segment config
 export const runtime = "edge";
 
@@ -25,7 +29,7 @@ export default async function Image(props: {
     .then((r) => r.arrayBuffer())
     .then((r) => Buffer.from(r).toString("base64"));
 
-  const languages = await getUsersTopLanguages(user);
+  const { languages, username }  = await getUsersTopLanguages(user);
 
   const maxCount = languages[0].count;
   const languagesWithPercentage = languages.map((lang) => ({
@@ -176,6 +180,6 @@ export default async function Image(props: {
     // ImageResponse options
     {
       ...size,
-    }
+    },
   );
 }
