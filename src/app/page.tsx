@@ -23,9 +23,10 @@ export default function Home() {
           placeholder="Github username"
           type="text"
         />
-        <button className="bg-blue-700 rounded-r-xl p-2 text-4xl">Search</button>
+        <button className="bg-blue-700 rounded-r-xl p-2 text-4xl">
+          Search
+        </button>
       </form>
-      
     </main>
   );
 }
