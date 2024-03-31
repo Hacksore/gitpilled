@@ -15,7 +15,10 @@ export default async function UserStats({
   user: string;
 }) {
   const shareData = new URLSearchParams();
-  shareData.append("url", `https://gitpilled.vercel.app/${user}`);
+  shareData.append(
+    "url",
+    `https://gitpilled.vercel.app/${githubData?.username || ""}`
+  );
   shareData.append(
     "text",
     `Checkout what ${githubData?.username || "everybody"} is pilled on 💊`
