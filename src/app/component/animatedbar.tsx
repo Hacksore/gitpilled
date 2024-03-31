@@ -1,11 +1,10 @@
 "use client";
 import { DEFAULT_COLOR } from "@/constants";
-import { cn } from "@/lib/utils";
+import { cn } from "@/utils/tailwind";
 import { GithubData } from "@/utils/github";
 import { motion } from "framer-motion";
 import colors from "@/utils/colors.json";
 import { LanguageName } from "@/utils/types";
-import { formatNumber } from "@/utils/methods";
 
 type AnimatedBarProps = {
   username?: string;
