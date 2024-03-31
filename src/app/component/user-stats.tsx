@@ -67,12 +67,12 @@ export default async function UserStats({
           )}
         </h2>
         <a
-          className="bg-white hover:scale-105 cursor-pointer transition duration-300 active:scale-95 rounded-full font-bold flex gap-2 items-center justify-center text-black w-64 text-2xl p-4 m-8"
+          className="bg-white group hover:scale-105 cursor-pointer transition duration-300 active:scale-95 rounded-full font-bold flex gap-2 items-center justify-center text-black w-64 text-2xl p-4 m-8"
           target="_blank"
           href={
-            githubData === undefined
-              ? `https://twitter.com/intent/post?${shareData.toString()}`
-              : undefined
+            loading
+              ? undefined
+              : `https://twitter.com/intent/post?${shareData.toString()}`
           }
         >
           Share on{" "}
@@ -82,6 +82,7 @@ export default async function UserStats({
             height={32}
             version="1.1"
             viewBox="0 0 300 300.251"
+            className=" group-hover:rotate-[360deg] group-hover:scale-75 transition-transform duration-300"
           >
             <path d="M178.57 127.15 290.27 0h-26.46l-97.03 110.38L89.34 0H0l117.13 166.93L0 300.25h26.46l102.4-116.59 81.8 116.59h89.34M36.01 19.54H76.66l187.13 262.13h-40.66" />
           </svg>
