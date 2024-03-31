@@ -5,7 +5,7 @@
   </a>
 </p>
 
-<a href="https://discord.gg/eXmeNkVjye" target="_parent">
+<a href="https://discord.com/servers/trash-devs-796594544980000808" target="_parent">
 <img alt="Discord" height=20 src="https://img.shields.io/discord/796594544980000808?style=&logo=discord&logoColor=white&label=%20&labelColor=%237389D8&color=%237389D8" />
 </a>
 <a href="https://twitter.com/gitpilled" target="_parent">
