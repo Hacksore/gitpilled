@@ -62,11 +62,19 @@ export default function Home() {
         <div className="absolute bottom-4 left-1/2 -translate-x-1/2">
           <p className="text-xs text-center">
             Made with ❤️ by{" "}
-            <a href="https://twitter.com/typesafeui" className="text-red-400">
+            <a
+              target="_blank"
+              href="https://twitter.com/typesafeui"
+              className="text-red-400"
+            >
               typesafeui
             </a>
             {" and "}
-            <a href="https://twitter.com/Hacksore" className="text-red-400">
+            <a
+              target="_blank"
+              href="https://twitter.com/Hacksore"
+              className="text-red-400"
+            >
               Hacksore
             </a>
           </p>
