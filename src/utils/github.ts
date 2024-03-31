@@ -13,7 +13,7 @@ export type GithubData = {
 };
 
 export async function getUsersTopLanguages(
-  rawUser: string
+  rawUser: string,
 ): Promise<GithubData | undefined> {
   const username = rawUser.toLowerCase();
 
@@ -28,7 +28,7 @@ export async function getUsersTopLanguages(
     });
 
     console.log("userinfo", {
-      rateLimit: userInfo.headers["x-ratelimit-limit"]
+      rateLimitRemaining: userInfo.headers["x-ratelimit-remaining"],
     });
 
     const listOfRepos = await octokit.paginate("GET /users/{username}/repos", {
@@ -36,7 +36,7 @@ export async function getUsersTopLanguages(
     });
 
     console.log("listRepos", {
-      rateLimit: userInfo.headers["x-ratelimit-limit"]
+      rateLimitRemaining: userInfo.headers["x-ratelimit-remaining"],
     });
 
     // create a list of all the langauge data
@@ -56,7 +56,7 @@ export async function getUsersTopLanguages(
         }
         return acc;
       },
-      {}
+      {},
     );
 
     // sort the languages by count and have name and count as a property
