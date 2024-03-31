@@ -1,4 +1,4 @@
-import { Octokit } from "@octokit/rest";
+import { Octokit } from "octokit";
 
 interface UserRepos {
   name: string;
@@ -13,69 +13,89 @@ export type GithubData = {
 };
 
 export async function getUsersTopLanguages(
-  rawUser: string,
+  rawUser: string
 ): Promise<GithubData | undefined> {
-  const username = rawUser.toLowerCase();
+  const queryUser = rawUser.toLowerCase();
 
   // TODO: we need a lot of tokens to cycle through
-  const octokit = new Octokit({
-    auth: process.env.GITHUB_PAT,
-  });
-
   try {
-    const userInfo = await octokit.request("GET /users/{username}", {
-      username,
+    const octokit = new Octokit({
+      auth: process.env.GITHUB_PAT,
     });
 
-    console.log("userinfo", {
-      rateLimitRemaining: userInfo.headers["x-ratelimit-remaining"],
-    });
-
-    const listOfRepos = await octokit.paginate("GET /users/{username}/repos", {
-      username: username,
-    });
-
-    console.log("listRepos", {
-      rateLimitRemaining: userInfo.headers["x-ratelimit-remaining"],
-    });
-
-    // create a list of all the langauge data
-    const filteredRepos = listOfRepos
-      .filter((repo) => repo.language && !repo.fork)
-      .map((repo) => repo.language);
-
-    // get the count of each language in the list
-    const languageCount = filteredRepos.reduce(
-      (acc: Record<string, number>, lang) => {
-        if (!lang) return acc;
-
-        if (acc[lang]) {
-          acc[lang] += 1;
-        } else {
-          acc[lang] = 1;
+    const userInfo = (await octokit.graphql.paginate(
+      `query GetUsernameAndRepos($username: String!, $num: Int = 100, $cursor: String) {
+        user(login: $username) {
+          login,
+          repositories(first: $num, after: $cursor, isFork: false) {
+            nodes {
+              name,
+              languages(first: 100) {
+                edges {
+                  size,
+                  node {
+                    name
+                  }
+                }
+              }
+            }
+            pageInfo {
+              hasNextPage
+              endCursor
+            }  
+          }
         }
+      }`,
+      {
+        username: queryUser,
+      }
+    )) as {
+      user: {
+        login: string;
+        repositories: {
+          nodes: {
+            name: string;
+            languages: {
+              edges: {
+                size: number;
+                node: {
+                  name: string;
+                };
+              }[];
+            };
+          }[];
+        };
+      };
+    };
+
+    const username = userInfo?.user?.login;
+
+    const languagesMap = userInfo?.user?.repositories?.nodes
+      ?.flatMap((r) => r.languages.edges)
+      .reduce((acc, { node, size }) => {
+        acc[node.name] = (acc[node.name] || 0) + size;
         return acc;
-      },
-      {},
-    );
+      }, {} as Record<string, number>);
 
-    // sort the languages by count and have name and count as a property
-    const sortedLanguages = Object.entries(languageCount)
-      .map(([name, count]) => ({ name, count }))
-      .sort((a, b) => b.count - a.count);
+    const repoLanguages = Object.entries(languagesMap)
+      .map(([name, size]) => ({
+        name,
+        count: size,
+      }))
+      .sort((a, b) => b.count - a.count)
+      .slice(0, 5);
 
-    const languages = sortedLanguages.slice(0, 5);
-
-    const maxCount = languages[0]?.count || 0;
-    const languagesWithPercentage = languages?.map((lang) => ({
+    const maxCount = repoLanguages[0]?.count || 0;
+    const languagesWithPercentage = repoLanguages?.map((lang) => ({
       ...lang,
       percentage:
         maxCount !== 0
           ? 25 + Math.floor((lang.count / maxCount) * 100) * 0.75
           : 0,
     }));
+
     return {
-      username: userInfo.data.login,
+      username,
       languages: languagesWithPercentage,
       maxCount,
     };
