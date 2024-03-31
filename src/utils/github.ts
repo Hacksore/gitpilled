@@ -95,9 +95,10 @@ export async function nonCachedGetUsersTopLanguages(
   }
 }
 
+const cacheKey = "githubstats-v1";
 const getUsersTopLanguagesCached = unstable_cache(
   (user: string) => nonCachedGetUsersTopLanguages(user),
-  ["githubstats"],
+  [cacheKey],
   {
     revalidate: 3600,
   },
