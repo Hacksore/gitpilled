@@ -31,7 +31,7 @@ export default async function UserStats({
   );
 
   return (
-    <main className="w-screen h-screen bg-gradient-to-b from-[#131313] to-black text-white">
+    <main className="w-screen h-screen bg-gradient-to-b from-[#131313] to-black text-white pt-12">
       <a href="/" className="absolute top-6 left-6">
         <GitPilledLogo className="h-6 w-fit" />
       </a>
@@ -96,7 +96,7 @@ export default async function UserStats({
           ).map((lang, i) => {
             return (
               <div
-                key={lang.name}
+                key={loading ? `loading-bar-${i}` : lang.name}
                 className="h-full w-20 md:w-fit flex flex-col items-center justify-end md:gap-12"
               >
                 <div className="text-center md:text-3xl font-extrabold">
