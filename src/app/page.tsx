@@ -21,13 +21,13 @@ export default function Home() {
         linear-gradient(to bottom, #ffffff08 1px, transparent 1px)`,
         }}
       >
-        <div className="flex flex-col items-center bg-background p-12 gap-8 rounded-xl border border-primary/10">
+        <div className="flex flex-col items-center bg-background p-8 mx-2 md:p-12 gap-2 rounded-xl border border-primary/10">
           <img src="/pill.png" alt="pill" className="w-24 h-24" />
           <h1 className="text-3xl font-bold">gitpilled</h1>
           <h2 className="text-xl font-bold">
             What language are you pilled in?
           </h2>
-          <form action={() => redirectToUserProfile(user)} className="flex">
+          <form action={() => redirectToUserProfile(user)} className="flex mt-8">
             <Input
               name="user"
               value={user}
