@@ -5,7 +5,7 @@ import { DEFAULT_COLOR, LanguageName, getUsersTopLanguages } from "@/utils";
 export const runtime = "edge";
 
 // Image metadata
-export const alt = "About Acme";
+export const alt = "GitPilled OG Image";
 export const size = {
   width: 1200,
   height: 630,
