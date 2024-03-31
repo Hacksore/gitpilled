@@ -97,7 +97,10 @@ export async function nonCachedGetUsersTopLanguages(
 
 const getUsersTopLanguagesCached = unstable_cache(
   (user: string) => nonCachedGetUsersTopLanguages(user),
-  [`githubstats`],
+  ["githubstats"],
+  {
+    revalidate: 3600,
+  },
 );
 
 let getUsersTopLanguages: typeof nonCachedGetUsersTopLanguages;
