@@ -29,30 +29,7 @@ export default async function Image(props: {
     .then((r) => r.arrayBuffer())
     .then((r) => Buffer.from(r).toString("base64"));
 
-  // const languages = await getUsersTopLanguages(user);
-
-  const languages = [
-    {
-      name: "JavaScript",
-      count: 10,
-    },
-    {
-      name: "TypeScript",
-      count: 8,
-    },
-    {
-      name: "Python",
-      count: 5,
-    },
-    {
-      name: "Java",
-      count: 3,
-    },
-    {
-      name: "C++",
-      count: 2,
-    },
-  ];
+  const languages = await getUsersTopLanguages(user);
 
   const maxCount = languages[0].count;
   const languagesWithPercentage = languages.map((lang) => ({
