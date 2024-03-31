@@ -1,9 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 import { Octokit } from "@octokit/rest";
 import colors from "@/utils/colors.json";
-
-type LanguageName = keyof typeof colors;
-const DEFAULT_COLOR = "#444444";
+import { DEFAULT_COLOR, LanguageName } from "@/utils";
 
 async function getUsersTopLanguages(username: string) {
   const octokit = new Octokit({
