@@ -111,42 +111,67 @@ export default async function Image(props: {
                 height: "100%",
               }}
             >
-              {languagesWithPercentage.map((lang, i) => (
-                <div
-                  key={lang.name}
-                  style={{
-                    display: "flex",
-                    flexDirection: "column",
-                    alignItems: "center",
-                    height: "100%",
-                    justifyContent: "flex-end",
-                    gap: 32,
-                  }}
-                >
+              {languagesWithPercentage.map((lang, i) => {
+                const bgColor =
+                  colors[lang.name.toLocaleLowerCase() as LanguageName].color ||
+                  DEFAULT_COLOR;
+                return (
                   <div
+                    key={lang.name}
                     style={{
                       display: "flex",
                       flexDirection: "column",
-                      fontSize: 32,
-                      color: "white",
+                      alignItems: "center",
+                      height: "100%",
+                      justifyContent: "flex-end",
+                      gap: 32,
                     }}
                   >
-                    {lang.name}
+                    <div
+                      style={{
+                        display: "flex",
+                        flexDirection: "column",
+                        fontSize: 32,
+                        color: "white",
+                      }}
+                    >
+                      {lang.name}
+                    </div>
+                    <div
+                      style={{
+                        display: "flex",
+                        flexDirection: "column",
+                        justifyContent: "flex-end",
+                        alignItems: "center",
+
+                        height: `${lang.percentage * 0.85}%`,
+                        width: 120,
+                        backgroundColor: bgColor,
+
+                        borderRadius: "32px 32px 0 0",
+                      }}
+                    >
+                      <div
+                        style={{
+                          display: "flex",
+                          flexDirection: "column",
+                          justifyContent: "center",
+                          alignItems: "center",
+                          fontSize: 30,
+                          marginTop: 8,
+                          background: "#ffffff80",
+                          color: "black",
+                          borderRadius: 12,
+                          padding: 12,
+                          marginBottom: 12,
+                        }}
+                      >
+                        #{i + 1}
+                      </div>
+                    </div>
                   </div>
-                  <div
-                    style={{
-                      display: "flex",
-                      flexDirection: "column",
-                      height: `${lang.percentage * 0.85}%`,
-                      width: 120,
-                      backgroundColor:
-                        colors[lang.name.toLocaleLowerCase() as LanguageName]
-                          .color || DEFAULT_COLOR,
-                      borderRadius: "32px 32px 0 0",
-                    }}
-                  ></div>
-                </div>
-              ))}
+                );
+              })}
             </div>
           </div>
         </div>
