@@ -15,13 +15,13 @@ export const metadata: Metadata = {
   openGraph: {
     title: META_INFO.title,
     description: META_INFO.description,
-    images: ["/og.png"],
+    images: ["https://gitpilled.vercel.app/og.png"],
     type: "website",
   },
   twitter: {
     title: META_INFO.title,
     description: META_INFO.description,
-    images: ["/og.png"],
+    images: ["https://gitpilled.vercel.app/og.png"],
     card: "summary_large_image",
   },
 };
