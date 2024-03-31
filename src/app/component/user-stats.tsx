@@ -1,9 +1,11 @@
-import { DEFAULT_COLOR } from "@/constants";
-import colors from "@/utils/colors.json";
-import { LanguageName } from "@/utils/types";
 import { AnimatedBar } from "./animatedbar";
-import { notFound } from "next/navigation";
 import { GithubData } from "@/utils/github";
+
+const MOCK_NUMBERS = Array.from({ length: 5 }, (_, i) => ({
+  name: "Loading...",
+  percentage: 0,
+  count: 0,
+}));
 
 export default async function UserStats({
   githubData,
@@ -80,29 +82,27 @@ export default async function UserStats({
           </svg>
         </a>
         <div className="flex flex-grow w-fit pt-24 2xl:px-32 md:gap-8 2xl:gap-32 mx-auto">
-          {githubData !== undefined &&
-            githubData.languages.map((lang, i) => {
-              const backgroundColor =
-                colors[lang.name.toLocaleLowerCase() as LanguageName].color ||
-                DEFAULT_COLOR;
-              return (
-                <div
-                  key={lang.name}
-                  className="h-full w-20 md:w-fit flex flex-col items-center justify-end md:gap-12"
-                >
-                  <div className="text-center md:text-3xl font-extrabold">
-                    {lang.name}
-                  </div>
-                  <AnimatedBar
-                    backgroundColor={backgroundColor}
-                    percentage={lang.percentage}
-                    languageName={lang.name}
-                    username={githubData.username}
-                    rank={i + 1}
-                  />
+          {(loading || githubData === undefined
+            ? MOCK_NUMBERS
+            : githubData.languages
+          ).map((lang, i) => {
+            return (
+              <div
+                key={lang.name}
+                className="h-full w-20 md:w-fit flex flex-col items-center justify-end md:gap-12"
+              >
+                <div className="text-center md:text-3xl font-extrabold">
+                  {lang.name}
                 </div>
-              );
-            })}
+                <AnimatedBar
+                  language={lang}
+                  username={githubData?.username}
+                  rank={i + 1}
+                  loading={loading}
+                />
+              </div>
+            );
+          })}
         </div>
       </div>
     </main>
