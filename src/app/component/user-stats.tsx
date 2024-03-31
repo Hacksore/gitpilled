@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import { GitPilledLogo } from "@/components/logo";
 import { AnimatedBar } from "./animatedbar";
 import { GithubData } from "@/utils/github";
@@ -9,10 +10,10 @@ const MOCK_NUMBERS = Array.from({ length: 5 }, (_, _i) => {
     name: "Loading...",
     percentage: (i * i) / 25,
     realPercentage: 0,
-    score: 0
+    score: 0,
   };
 
-  return mockData
+  return mockData;
 });
 
 export default async function UserStats({
@@ -27,11 +28,11 @@ export default async function UserStats({
   const shareData = new URLSearchParams();
   shareData.append(
     "url",
-    `https://gitpilled.vercel.app/${githubData?.username || ""}`
+    `https://gitpilled.vercel.app/${githubData?.username || ""}`,
   );
   shareData.append(
     "text",
-    `Checkout what ${githubData?.username || "everybody"} is pilled on 💊`
+    `Checkout what ${githubData?.username || "everybody"} is pilled on 💊`,
   );
 
   return (
@@ -48,11 +49,13 @@ export default async function UserStats({
           <GitPilledLogo className="h-6 w-fit" />
         </a>
         {githubData !== undefined ? (
-          <img
-            src={`https://github.com/${githubData.username}.png`}
-            alt={`${githubData.username} avatar`}
-            className="w-16 h-16 mt-10 overflow-hidden rounded-full mx-auto"
-          />
+          <a target="_blank" href={`https://github.com/${githubData.username}`}>
+            <img
+              src={`https://github.com/${githubData.username}.png`}
+              alt={`${githubData.username} avatar`}
+              className="w-16 h-16 mt-10 overflow-hidden rounded-full mx-auto"
+            />
+          </a>
         ) : (
           <div className="w-16 h-16 mt-10 bg-neutral-600 overflow-hidden rounded-full mx-auto"></div>
         )}
@@ -65,7 +68,12 @@ export default async function UserStats({
             <>
               This is what{" "}
               <span className="font-bold md:text-4xl">
-                @{githubData.username}
+                <a
+                  target="_blank"
+                  href={`https://github.com/${githubData.username}`}
+                >
+                  @{githubData.username}
+                </a>
               </span>{" "}
               is pilled on
             </>
