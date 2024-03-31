@@ -26,18 +26,12 @@ export default async function Image(props: {
   const bast64UserImage = await fetch(`https://github.com/${user}.png`)
     .then((r) => r.arrayBuffer())
     .then((r) => Buffer.from(r).toString("base64"));
-
   const res = await getUsersTopLanguages(user);
   if (!res) {
     return null;
   }
-  const { languages, username } = res;
+  const { pilledLanguages, username } = res;
 
-  const maxCount = languages[0].count;
-  const languagesWithPercentage = languages.map((lang) => ({
-    ...lang,
-    percentage: 25 + Math.floor((lang.count / maxCount) * 100) * 0.75,
-  }));
   return new ImageResponse(
     (
       // ImageResponse JSX element
@@ -62,13 +56,13 @@ export default async function Image(props: {
             position: "absolute",
             top: 36,
             right: 48,
-            color: "white"
+            color: "white",
           }}
         >
           <GitPilledLogo
             style={{
               height: 36,
-              width: 208.08
+              width: 208.08,
             }}
           />
         </div>
@@ -132,7 +126,7 @@ export default async function Image(props: {
                 height: "100%",
               }}
             >
-              {languagesWithPercentage.map((lang, i) => {
+              {pilledLanguages.map((lang, i) => {
                 const bgColor =
                   colors[lang.name.toLocaleLowerCase() as LanguageName].color ||
                   DEFAULT_COLOR;

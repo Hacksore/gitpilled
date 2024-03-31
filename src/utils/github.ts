@@ -1,5 +1,6 @@
 import { Octokit } from "octokit";
 import { PilledLanguage, pillgorithm } from "./pillgorithm";
+import { unstable_cache } from "next/cache";
 
 export type GithubData = {
   username: string;
@@ -95,9 +96,9 @@ export async function nonCachedGetUsersTopLanguages(
 }
 
 // use this when working on the nonCachedGetUsersTopLanguages function
-export const getUsersTopLanguages = nonCachedGetUsersTopLanguages;
+// export const getUsersTopLanguages = nonCachedGetUsersTopLanguages;
 
-// export const getUsersTopLanguages = unstable_cache(
-//   (user: string) => nonCachedGetUsersTopLanguages(user),
-//   [`githubstats`]
-// );
+export const getUsersTopLanguages = unstable_cache(
+  (user: string) => nonCachedGetUsersTopLanguages(user),
+  [`githubstats`]
+);
