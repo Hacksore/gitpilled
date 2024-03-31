@@ -32,7 +32,9 @@ export default async function UserStats({
 
   return (
     <main className="w-screen h-screen bg-gradient-to-b from-[#131313] to-black text-white">
-      <GitPilledLogo className="absolute h-6 w-fit top-6 left-6" />
+      <a href="/" className="absolute top-6 left-6">
+        <GitPilledLogo className="h-6 w-fit" />
+      </a>
       <div
         className="h-full w-full overflow-y-hidden flex flex-col items-center overflow-auto"
         style={{
