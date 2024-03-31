@@ -100,7 +100,7 @@ const getUsersTopLanguagesCached = unstable_cache(
   [`githubstats`],
 );
 
-let getUsersTopLanguages;
+let getUsersTopLanguages: typeof nonCachedGetUsersTopLanguages;
 if (process.env.NODE_ENV !== "production") {
   getUsersTopLanguages = nonCachedGetUsersTopLanguages;
 } else {
