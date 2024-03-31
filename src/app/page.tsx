@@ -49,11 +49,14 @@ export default function Home() {
               name="user"
               value={user}
               onChange={(e) => setUser(e.target.value)}
-              data-disable-1password="true"
+              className="rounded-r-none"
               placeholder="Github username"
-              type="text"
+              type="search"
             />
-            <Button variant={"default"}>Search</Button>
+            <Button variant="default"
+
+              className="rounded-l-none"
+            >Search</Button>
           </form>
         </div>
       </div>
