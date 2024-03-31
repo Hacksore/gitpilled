@@ -23,9 +23,15 @@ export default async function Image(props: {
   };
 }) {
   const { user } = props.params;
-  const bast64UserImage = await fetch(`https://github.com/${user}.png`)
-    .then((r) => r.arrayBuffer())
-    .then((r) => Buffer.from(r).toString("base64"));
+  const base64UserImage = await fetch(`https://github.com/${user}.png`)
+    .then(async (r) => r.blob())
+    .then(
+      async (blob) =>
+        `data:${blob.type};base64,${Buffer.from(
+          await blob.arrayBuffer()
+        ).toString("base64")}`
+    );
+
   const res = await getUsersTopLanguages(user);
   if (!res) {
     return null;
@@ -98,9 +104,10 @@ export default async function Image(props: {
               style={{
                 marginTop: 24,
                 borderRadius: "50%",
-                objectFit: "cover",
+                background: "#888",
+                objectPosition: "cover",
               }}
-              src={`data:image/png;base64,${bast64UserImage}`}
+              src={base64UserImage}
             />
             @{username}
           </div>
