@@ -91,7 +91,7 @@ export async function nonCachedGetUsersTopLanguages(
     };
   } catch (error: any) {
     console.error(error.message);
-    throw new Error("Failed to fetch data from GitHub");
+    return undefined;
   }
 }
 
