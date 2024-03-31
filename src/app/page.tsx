@@ -12,7 +12,7 @@ const redirectToUserProfile = (username: string) => {
 export default function Home() {
   const [user, setUser] = useState<string>("");
   return (
-    <main className="w-screen h-screen bg-gradient-to-b from-[#131313] to-black text-white">
+    <main className="w-screen h-screen bg-gradient-to-b from-[#131313] to-black text-white dark">
       <div
         className="h-full w-full overflow-y-hidden flex flex-col items-center justify-center gap-12 overflow-auto animated-grid"
         style={{
@@ -21,14 +21,13 @@ export default function Home() {
         linear-gradient(to bottom, #ffffff08 1px, transparent 1px)`,
         }}
       >
-        <div className="flex flex-col items-center">
-        <img src="/pill.png" alt="pill" className="w-24 h-24" />
-        <h2 className="text-3xl md:text-5xl mt-4">
-          What language are you pilled in?
-        </h2>
-        </div>
-        <form action={() => redirectToUserProfile(user)} className="flex">
-          <div className="bg-primary flex p-6 gap-2 rounded-xl border-foreground/10">
+        <div className="flex flex-col items-center bg-background p-12 gap-8 rounded-xl border border-primary/10">
+          <img src="/pill.png" alt="pill" className="w-24 h-24" />
+          <h1 className="text-3xl font-bold">gitpilled</h1>
+          <h2 className="text-xl font-bold">
+            What language are you pilled in?
+          </h2>
+          <form action={() => redirectToUserProfile(user)} className="flex">
             <Input
               name="user"
               value={user}
@@ -37,9 +36,9 @@ export default function Home() {
               placeholder="Github username"
               type="text"
             />
-            <Button>Search</Button>
-          </div>
-        </form>
+            <Button variant={"default"}>Search</Button>
+          </form>
+        </div>
       </div>
     </main>
   );
