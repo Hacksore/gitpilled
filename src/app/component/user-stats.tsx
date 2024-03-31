@@ -1,3 +1,4 @@
+import { GitPilledLogo } from "@/components/logo";
 import { AnimatedBar } from "./animatedbar";
 import { GithubData } from "@/utils/github";
 
@@ -31,6 +32,7 @@ export default async function UserStats({
 
   return (
     <main className="w-screen h-screen bg-gradient-to-b from-[#131313] to-black text-white">
+      <GitPilledLogo className="absolute h-6 w-fit top-6 left-6" />
       <div
         className="h-full w-full overflow-y-hidden flex flex-col items-center overflow-auto"
         style={{

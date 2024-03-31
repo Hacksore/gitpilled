@@ -106,6 +106,9 @@ export async function nonCachedGetUsersTopLanguages(
   }
 }
 
+// use this when working on the nonCachedGetUsersTopLanguages function
+// export const getUsersTopLanguages = nonCachedGetUsersTopLanguages;
+
 export const getUsersTopLanguages = unstable_cache(
   (user: string) => nonCachedGetUsersTopLanguages(user),
   [`githubstats`]

@@ -3,6 +3,7 @@ import colors from "@/utils/colors.json";
 import { getUsersTopLanguages } from "@/utils/github";
 import { LanguageName } from "@/utils/types";
 import { DEFAULT_COLOR } from "@/constants";
+import { GitPilledLogo } from "@/components/logo";
 // Route segment config
 export const runtime = "edge";
 
@@ -52,6 +53,25 @@ export default async function Image(props: {
           backgroundImage: `linear-gradient(to bottom, #131313, #0a0a0a)`,
         }}
       >
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            alignItems: "center",
+            justifyContent: "center",
+            position: "absolute",
+            top: 36,
+            right: 48,
+            color: "white"
+          }}
+        >
+          <GitPilledLogo
+            style={{
+              height: 36,
+              width: 208.08
+            }}
+          />
+        </div>
         <div
           style={{
             width: "100%",
