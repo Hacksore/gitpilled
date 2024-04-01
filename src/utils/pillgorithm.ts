@@ -55,13 +55,13 @@ export function pillgorithm<T extends PillgorithmRepositoryInfo>(
     .map(([lang, score]) => {
       const precentageVal = score / maxScore;
       const cappedPercentage = 0.25 + precentageVal * 0.75;
-      const beutifiedPercentage = Math.round(cappedPercentage * 10000) / 100;
+      const beautifiedPercentage = Math.round(cappedPercentage * 10000) / 100;
 
       return {
         name: lang,
         score,
         realPercentage: precentageVal,
-        percentage: beutifiedPercentage,
+        percentage: beautifiedPercentage,
       };
     })
     .sort((a, b) => b.percentage - a.percentage)
