@@ -41,7 +41,7 @@ export function AnimatedBar({
       }}
       href={
         username !== undefined && !loading && language
-          ? `https://github.com/${username}?tab=repositories&q=&type=&language=${language.name}`
+          ? `https://github.com/${username}?tab=repositories&q=&type=&language=${encodeURIComponent(language.name)}`
           : undefined
       }
       target="_blank"
