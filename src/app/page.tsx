@@ -16,6 +16,9 @@ export default function Home() {
   const [user, setUser] = useState<string>("");
   return (
     <main className="w-screen h-screen bg-gradient-to-b from-[#131313] to-black text-white dark">
+      <header className="w-full h-8 bg-blue-500 text-center">
+        <a target="_blank" href="https://shiptalkers.dev">Check your shiptalkers.dev to see if you yap or ship</a>
+      </header>
       <div
         className="h-full w-full relative overflow-y-hidden flex flex-col items-center justify-center gap-12 overflow-auto animated-grid"
         style={{
