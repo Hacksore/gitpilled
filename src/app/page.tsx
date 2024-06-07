@@ -20,7 +20,7 @@ export default function Home() {
         <a target="_blank" href="https://shiptalkers.dev">Check your shiptalkers.dev to see if you yap or ship</a>
       </header>
       <div
-        className="h-full w-full relative overflow-y-hidden flex flex-col items-center justify-center gap-12 overflow-auto animated-grid"
+        className="h-[calc(100%_-_2rem)] w-full relative overflow-y-hidden flex flex-col items-center justify-center gap-12 overflow-auto animated-grid"
         style={{
           backgroundSize: "100px 100px",
           backgroundImage: `linear-gradient(to right, #ffffff08 1px, transparent 1px),
