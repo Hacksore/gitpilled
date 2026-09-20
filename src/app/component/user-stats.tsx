@@ -4,6 +4,7 @@ import { GitPilledLogo } from "@/components/logo";
 import { AnimatedBar } from "./animatedbar";
 import { GithubData } from "@/utils/github";
 import { PilledLanguage } from "@/utils/pillgorithm";
+import Link from "next/link";
 
 const MOCK_NUMBERS = Array.from({ length: 5 }, (_, _i) => {
   const i = _i + 1;
@@ -46,9 +47,9 @@ export default function UserStats({
           linear-gradient(to bottom, #ffffff08 1px, transparent 1px)`,
         }}
       >
-        <a href="/" className=" block mx-auto">
+        <Link href="/" className=" block mx-auto">
           <GitPilledLogo className="h-6 w-fit" />
-        </a>
+        </Link>
         {githubData !== undefined ? (
           <a target="_blank" href={`https://github.com/${githubData.username}`}>
             <img

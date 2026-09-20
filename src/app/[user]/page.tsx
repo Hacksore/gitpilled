@@ -2,11 +2,13 @@ import { Suspense } from "react";
 import UserStats from "../component/user-stats";
 import FetchRepos from "../fetch-repos";
 
-export default function Home({
-  params: { user },
+export default async function Home({
+  params,
 }: {
-  params: { user: string };
+  params: Promise<{ user: string }>;
 }) {
+  const { user } = await params;
+
   return (
     <Suspense fallback={<UserStats user={user} loading={true} />}>
       <FetchRepos user={user} />

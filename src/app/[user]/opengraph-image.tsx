@@ -1,14 +1,13 @@
 /* eslint-disable jsx-a11y/alt-text */
-/* eslint-disable @next/next/no-img-element */
 import { ImageResponse } from "next/og";
 import colors from "@/utils/colors.json";
 import { getUsersTopLanguages } from "@/utils/github";
 import { LanguageName } from "@/utils/types";
 import { DEFAULT_COLOR } from "@/constants";
 import { GitPilledLogo } from "@/components/logo";
-import { notFound } from "next/navigation";
+import { readFile } from "node:fs/promises";
 // Route segment config
-export const runtime = "edge";
+export const runtime = "nodejs";
 
 // Image metadata
 export const alt = "GitPilled OG Image";
@@ -21,11 +20,11 @@ export const contentType = "image/png";
 
 // Image generation
 export default async function Image(props: {
-  params: {
+  params: Promise<{
     user: string;
-  };
+  }>;
 }) {
-  const { user } = props.params;
+  const { user } = await props.params;
 
   let res;
   try {
@@ -35,9 +34,9 @@ export default async function Image(props: {
   }
 
   if (!res) {
-    const rawImageData = await fetch(
+    const rawImageData = await readFile(
       new URL("../opengraph-image.png", import.meta.url),
-    ).then((res) => res.arrayBuffer());
+    );
 
     const imageData = `data:image/png;base64,${Buffer.from(
       rawImageData,
